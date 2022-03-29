@@ -1,0 +1,561 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type AddressType {
+  city: String
+  countryISOCd: String
+  countryName: String
+  intlPostalCd: String
+  intnlRegionName: String
+  stateCd: String
+  stateDescr: String
+  streetAddress1: String
+  streetAddress2: String
+  streetAddress3: String
+  zip4: String
+  zip5: String
+}
+
+type ApproveRejectReqRes {
+  resultInfo: ApproveRejectReqResInfo
+  status: String!
+}
+
+type ApproveRejectReqResInfo {
+  batchRequestId: String
+  message: String
+  tcAdmin: String
+}
+
+type BulkCancelReq {
+  batchNum: String
+  status: String
+}
+
+type BulkHoldsReq {
+  batchNum: String
+  status: String
+}
+
+type TcaHoldsReq {
+  requestId: String
+  status: String
+}
+
+type MakeupReq {
+  status: String
+  message: String
+  data: MakeupReqInfo
+}
+type MakeupReqInfo {
+  requestId: String
+  tcAdmin: String
+}
+
+type BulkEmails {
+  emailTempId: String
+  pk: ID!
+  sk: String
+  skName: String
+}
+
+
+type LstRegByTc {
+  data: RegInfo
+  status: String
+}
+
+
+
+type Mutation {
+  approveRejectReq(input: approveRejectReqInput!): ApproveRejectReqRes
+  createBulkCancelReq(input: createBulkCancelRequest!): BulkCancelReq
+  createBulkHoldsReq(input: createBulkHoldsRequest!): BulkHoldsReq
+  createTcaHoldsReq(input: createTcaHoldsRequest!): TcaHoldsReq
+  submitReq(input: submitReqInp!): SubmitReq
+  validateRegAsmtEventId(input: validateRegInput!): RegAsmtEventIdValidationType
+  createMakeupReq(input: createMakeupRequest!): MakeupReq
+}
+
+type Query {
+  getBulkCancelEmailTempQry(input: BulkEmailsInput!): [BulkEmails]
+  getLstRegByTc(input: lstRegByTcInput!): LstRegByTc
+  getRegInfoByRegNo(input: RegByRegNoInput!): [RegInfoByRegNoType]
+  getRequestByTca(input: RequestByTcaInput!): RequestInfo
+  getTcaInfo(input: TcaInfoInput!): TcaInfo
+  getTcaMakeupInfo(input: TcaMakeupInfoInput!): TcaMakeupInfo
+  getUserRoles(input: getUserRolesInput!): UserRoles
+  getHoldsCategory(input: getHoldsInput!): [HoldsAllCategoriesType]
+  getAllHoldsCategory(input: getAllHoldsInput!): [HoldsAllCategoriesType]
+  getTestCenterHolds(input: getTestCenterHoldsInput!): TestCenterHoldsResponseType
+}
+
+
+input RegByRegNoInput {
+  regNo: String!
+}
+
+type RegInfoByRegNoType {
+  tcAdminGuid :  String
+  regId :  String
+  asmtEventId :  String
+  cancelHoldTypeCd :  String
+  cancelScoreDetails :  String
+  cancelScoreHoldTypeCd :  String
+  cancelScoreTs :  String
+  DateOfBirth :  String
+  educationLevelCd :  String
+  educationLevelDescr :  String
+  eduLevelPriority :  String
+  email :  String
+  firstName :  String
+  holdCode :  String
+  holds :  String
+  isAdultTT :  String
+  lastName :  String
+  middleInitial :  String
+  personId :  String
+  regCompletionTs :  String
+  regHoldsCreateTs :  String
+  registrationStatusCd :  String
+  registrationStatusDescr :  String
+  regNo :  String
+  regUpdateTs :  String
+  srcInput :  String
+  stagedHoldCodeUpdateTs :  String
+  updateTs :  String
+}
+
+
+type UserRoles {
+  status: String
+  data: String
+  message: String
+}
+
+type RegAsmtEventIdValidationType {
+  registrations: [RegistrationValidationType]
+  status: String
+}
+
+type RegInfo {
+  count: Int
+  regs: [registrationInfo]
+  tcAdminGuid: String
+}
+
+type RegistrationValidationType {
+  asmtEventId: String
+  regId: String
+  valid: Boolean
+}
+
+type RequestInfo {
+  action: String
+  campaignId: String
+  createTs: String
+  pk: String
+  reason: String
+  sk: String
+  tcAdminGuid: String
+  keepSize: Int
+  dataCancel: String
+  dataHolds: String
+  dataMakeup: String
+  requestor: String
+}
+
+
+
+type Schema {
+  createBulkCancelReqMutation: Mutation
+  createBulkHoldsReqMutation: Mutation
+  createTcaHoldsReqMutation: Mutation
+  createMakeupReqMutation: Mutation
+  getBulkCancelEmailTempQry: Query
+  getLstRegByTc: Query
+  getRegInfoByRegNo: Query
+  validateRegAsmtEventIdQry: Query
+  getTcaInfo: Query
+  getTcaMakeupInfo: Query
+  getHoldsCategory: Query
+  getAllHoldsCategory: Query
+  getTestCenterHolds: Query
+}
+
+type SubmitReq {
+  status: String
+  message: String
+  data: SubmitReqInfo
+}
+type SubmitReqInfo {
+  batchRequestId: String
+  tcAdmin: String
+}
+
+
+type TcaInfo {
+  status: String
+  data: TcaInfoResType
+}
+
+type TcaMakeupInfo {
+  status: String
+  primaryTCAdminData: makeupTCDataType
+  makeUpTCAdminData: makeupTCDataType
+}
+
+type makeupTCDataType{
+  adminDate: String
+  assessmentType: String
+  eventTitle: String
+  tcName: String
+  tcCd: String
+  testCenterTypeCd: String
+  tcTypeDescr: String
+  tamTCAdminId: String
+  tamTcId: String
+  address: AddressType
+  calendarStartDt: String
+  tcAdminStatus: String
+}
+
+type TcaInfoResType{
+  adminDate: String
+  assessmentType: String
+  eventTitle: String
+  tcName: String
+  tcCd: String
+  testCenterTypeCd: String
+  tcTypeDescr: String
+  tamTCAdminId: String
+  tamTcId: String
+  address: AddressType
+  tcAdminStatus: String
+}
+
+type registrationInfo {
+  regCompleteTs: String
+  regGrade: Int
+  regId: String
+  registrationStatusCd: Int
+  registrationStatusDescr: String
+  regUpdateTs: String
+  regFname: String
+  regLname: String
+  regMiddleInitial: String
+  regDOB: String
+  regNo: String
+  regAI: String
+  regEmail: String
+  isAdultTT: String
+  isSSD: String
+  regGender: String
+  regCountry: String
+  regGradeDescr: String
+  holdCode: String
+  cancelScoreHoldTypeCd: String
+  cancelScoreTs: String
+}
+
+type registrationInfoByRegNo {
+ tcAdminGuid :  String
+ regId :  String
+ asmtEventId :  Int
+ cancelHoldTypeCd :  String
+ cancelScoreDetails :  String
+ cancelScoreHoldTypeCd :  String
+ cancelScoreTs :  String
+ DateOfBirth :  String
+ educationLevelCd :  Int
+ educationLevelDescr :  String
+ eduLevelPriority :  Int
+ email :  String
+ firstName :  String
+ holdCode :  String
+ holds :  String
+ isAdultTT :  String
+ lastName :  String
+ middleInitial :  String
+ personId :  String
+ regCompletionTs :  String
+ regHoldsCreateTs :  String
+ registrationStatusCd :  Int
+ registrationStatusDescr :  String
+ regNo :  String
+ regUpdateTs :  String
+ srcInput :  String
+ stagedHoldCodeUpdateTs :  String
+ updateTs :  String
+}
+
+type HoldsAllCategoriesType {
+  pk: String!
+  sk: String!
+  skName: String!
+  SchoolDayInd: String
+  Priority: Int
+  WeekendInd: String
+  PSATInd: String
+  StudentInd: String
+  TCInd: String
+}
+
+input BulkEmailsInput {
+  pk: String!
+}
+
+input RequestByTcaInput {
+  pk: String!
+  sk: String!
+}
+
+
+input TcaInfoInput {
+  tamTCAdminId: String
+}
+
+input TcaMakeupInfoInput {
+  tamTCAdminId: String
+  action: String
+}
+
+input approveRejectBulkReqInput {
+  actionData: String
+  dbKeys: String
+  requestKeys: approveRejectRequestKeysInput!
+}
+
+input approveRejectCancelInput {
+  requestKey: String
+  stage: String
+  tcAdmin: String
+}
+
+input approveRejectReqInput {
+  bulkRequest: approveRejectBulkReqInput!
+  cancel: approveRejectCancelInput!
+}
+
+input approveRejectRequestKeysInput {
+  action: String!
+  customer: String!
+  mode: String!
+  notify: String!
+  reason: String!
+  requestDt: String!
+  requestor: String!
+}
+
+input bulkRequestInput {
+  actionData: String
+  dbKeys: dbKeysInput!
+  requestKeys: requestKeysInput!
+}
+
+input submitRequestInput {
+  actionData: String
+  dbKeys: dbKeysInput!
+  requestKeys: submitRequestKeysInput!
+}
+
+input cancelInput {
+  regId: [String]!
+}
+
+
+input createBulkCancelRequest {
+  bulkRequest: bulkRequestInput!
+  cancel: cancelInput!
+}
+
+input createBulkHoldsRequest {
+  bulkRequest: holdsBulkRequestInput!
+  holds: holdsInput!
+}
+
+input createTcaHoldsRequest {
+  bulkRequest: holdsTcaRequestInput!
+  holds: tcaHoldsInput!
+}
+
+input holdsBulkRequestInput {
+  dbKeys: String
+  actionData: String
+  requestKeys: holdsRequestKeysInput!
+}
+
+input holdsTcaRequestInput {
+  dbKeys: String
+  actionData: String
+  requestKeys: holdsRequestKeysInput!
+}
+
+input createMakeupRequest {
+  bulkRequest: makeupBulkReqInput!
+  makeup: makeupInput!
+}
+
+
+input makeupBulkReqInput {
+dbKeys: String
+actionData: String
+requestKeys: makeupReqKeysInput!
+}
+
+input makeupReqKeysInput {
+action: String
+mode: String
+reason: String
+notify: String
+customer: String
+requestor: String
+requestDt: String
+campaignId: String!
+}
+
+input makeupInput {
+  regIds: [String]!
+  mandInd: String
+  adminDate: String
+  eventTitle: String
+  tcInfo: tcInfoInput!
+}
+
+input tcInfoInput {
+  fromTcaId: String
+  toTcaId: String
+  fromtcCd: String
+  toTcCd: String
+  fromTcName: String
+  toTcName: String
+}
+
+input dbKeysInput {
+  pk: String
+  requestKey: String
+  sk: String
+}
+
+input lstRegByTcInput {
+  tcAdminGuid: String!
+}
+
+input regByRegNoInput {
+  regNo: String!
+}
+
+input requestKeysInput {
+  action: String!
+  customer: String!
+  mode: String!
+  note: String
+  notify: String!
+  campaignId: String!
+  requestDt: String!
+  requestor: String!
+}
+
+input holdsRequestKeysInput {
+  action: String!
+  mode: String!
+  reason: String!
+  notify: String!
+  customer: String!
+  requestor: String!
+  requestDt: String!
+}
+
+input holdsInput {
+  regIds: [String]!
+  adminDate: String!
+  eventTitle: String!
+  holdTypeDescr: String!
+  holdTypeCd: String!
+  holdAction: String!
+  tcInfo: holdsTcInfoInput!
+}
+
+input tcaHoldsInput {
+  adminDate: String!
+  eventTitle: String!
+  holdTypeDescr: String!
+  holdTypeCd: String!
+  holdAction: String!
+  tcInfo: holdsTcInfoInput!
+}
+
+input holdsTcInfoInput {
+  tcaId: String!
+  tcCd: String!
+  tcName: String!
+}
+
+input submitRequestKeysInput {
+  action: String!
+  customer: String!
+  mode: String!
+  note: String
+  notify: String!
+  reason: String!
+  requestDt: String!
+  requestor: String!
+  campaignId: String
+  dataCancel: String
+  dataMakeup: String
+}
+
+input submitCancelInput {
+  keepSize: Int!
+  stage: String!
+  tcAdmin: String!
+  adminDate: String!
+  tcCd: String!
+  tcName: String!
+}
+
+input submitReqInp {
+  bulkRequest: submitRequestInput!
+  cancel: submitCancelInput!
+}
+
+input validateRegInput {
+  asmtEventId: Int!
+  registrations: [String]!
+}
+
+input getUserRolesInput {
+  username: String!
+}
+
+input getHoldsInput {
+  pk: String!
+  sk: String!
+}
+
+input getAllHoldsInput {
+  pk: String!
+  TCInd: String!
+  StudentInd: String!
+  PSATInd: String!
+  WeekendInd:String!
+  SchoolDayInd: String!
+}
+
+input getTestCenterHoldsInput {
+  tcCd: String!
+}
+
+type TestCenterHoldsResponseType {
+  status: String!
+  statusCode: String!
+  body: String!
+  message: TestCenterErrorMessageStatusType
+}
+
+type TestCenterErrorMessageStatusType {
+  exception: String
+  bsHoldsProcessedTs: String
+}

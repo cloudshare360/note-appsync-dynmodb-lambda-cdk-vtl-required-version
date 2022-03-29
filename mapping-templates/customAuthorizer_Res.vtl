@@ -1,0 +1,6 @@
+#if( $util.isNullOrEmpty($ctx.result.policyDocument) || $ctx.result.policyDocument.Statement[0].Effect == "Deny" )
+    $util.error('Unauthorized', 'Access Denied')
+#elseif($ctx.error)
+    $util.error($ctx.error.message, $ctx.error.type)
+#end
+$util.toJson($ctx.result)

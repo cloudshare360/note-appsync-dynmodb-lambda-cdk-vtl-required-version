@@ -1,0 +1,12 @@
+{
+    "version": "2018-05-29",
+    "operation": "Query",
+    "query" : {
+        ## Provide a query expression. **
+        "expression": "regNo = :regNo",
+            "expressionValues" : {
+                ":regNo" : $util.dynamodb.toDynamoDBJson($ctx.args.input.regNo)
+       }
+    },
+    "index" : "msta-tca-reg-regNo-gsi"
+}

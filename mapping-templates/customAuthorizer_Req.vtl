@@ -1,0 +1,11 @@
+{
+  "operation": "Invoke",
+  "payload": {
+  		"headers": $util.toJson($context.request.headers),
+        "resource": $util.toJson($context.request.headers.resource),
+    	"action": $util.toJson($context.request.headers.action),
+        "type": "REQUEST",
+        "httpMethod":$util.toJson($context.request.headers.action),
+        "path": $util.toJson($context.request.headers.path)
+  }
+}
